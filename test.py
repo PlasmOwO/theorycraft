@@ -5,9 +5,9 @@
 import pandas as pd
 import numpy as np
 
-from class_itembis import Item
-import items.BRKCopy1 as brk
-#import items.class_itembis
+from class_item import Item
+import items.BRK as brk
+#import items.class_item
 
 
 print(brk.createBRK(False))
