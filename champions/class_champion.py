@@ -6,6 +6,26 @@
 import numpy as np
 
 
+def extract_values(df):
+    for col in df.columns:
+        # Vérifier si la colonne contient des dictionnaires
+        if all(isinstance(val, dict) for val in df[col]):
+            values = []
+            for index, row in df.iterrows():
+                key = str(index + 1)
+                value = row[col].get(key, None)
+
+                if value is None:
+                    # Si la clé n'existe pas, trouver la plus grande clé disponible
+                    keys = [int(k) for k in row[col].keys() if k.isdigit() and int(k) < int(key)]
+                    if keys:
+                        max_key = str(max(keys))
+                        value = row[col][max_key]
+
+                values.append(value)
+            df[col] = values
+
+
 # %%
 class Champion:
     def __init__(self, name : str, base_stats):
@@ -14,6 +34,7 @@ class Champion:
 
     def __str__(self):
         return self.name + "\n" + self.stats.to_string()
+ 
 
     def addItem(self,item):
         """
@@ -28,6 +49,9 @@ class Champion:
                 self.stats[newCol] = [item.stats[newCol]] * self.stats.shape[0]
             else:
                 self.stats[newCol] = item.stats[newCol]
+        extract_values(self.stats)
+    
+    
 
     def createList(self, lvl : int):
         """

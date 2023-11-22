@@ -1,3 +1,4 @@
+# %%
 # utiliser sys.path
 
 # Script : Faire une fonction qui **return** un objet Item
@@ -9,7 +10,7 @@ from class_item import Item
 import items.BRK as brk
 #import items.class_item
 
-
+# %%
 print(brk.createBRK(False))
 
 print(brk.createBRK())
@@ -34,5 +35,5 @@ import numpy as np
 testChamp.addItem(testBrk)
 
 print(testChamp)
-
+# %%
 
