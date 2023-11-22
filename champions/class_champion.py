@@ -57,7 +57,9 @@ class Champion:
         """
             Create a list from the index of the dataframe contained in the object.
         """
-        pass #doit return une list (comme pour le excel)
+        #Be carefull it's a Serie not a list
+        return self.stats.iloc[lvl-1]
+        #doit return une list (comme pour le excel)
         #Ensuite on ajoutera cette list au dataframe sur 1 champion
     
 

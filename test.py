@@ -35,5 +35,7 @@ import numpy as np
 testChamp.addItem(testBrk)
 
 print(testChamp)
+
+print(testChamp.createList(4)[0])
 # %%
 
