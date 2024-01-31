@@ -53,9 +53,14 @@ class Champion:
     
     
 
-    def createList(self, lvl : int):
+    def choseLvl(self, lvl : int):
         """
             Create a list from the index of the dataframe contained in the object.
+
+            Params :
+                lvl : The level of the build you want to add to the dataframe object
+            return :
+                A serie of the result depending on the lvl entered.
         """
         #Be carefull it's a Serie not a list
         return self.stats.iloc[lvl-1]

@@ -4,8 +4,10 @@ import pandas as pd
 class Array:
     def __init__(self):
         self.array = pd.DataFrame()
+        
     def __str__(self):
         return self.array.to_string()
+        
     def append(self,index,values):
         for col in index:
             if col not in self.array.columns:

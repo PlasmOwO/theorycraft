@@ -1,3 +1,17 @@
+# %% [markdown]
+# # Global Vars that will be used during the automation
+
+# %% [markdown]
+# | Global vars |
+# |----------
+# | BONUS_AD ||
+# | AD       |
+# | AP       |
+# | HP       |
+# | BONUS
+# |TARGET_MISSING_HP|
+# |critical strike chance|_AS |
+
 # %%
 # utiliser sys.path
 
@@ -8,6 +22,7 @@ import numpy as np
 
 from class_item import Item
 import items.BRK as brk
+import class_array
 #import items.class_item
 
 # %%
@@ -36,6 +51,10 @@ testChamp.addItem(testBrk)
 
 print(testChamp)
 
-print(testChamp.createList(4)[0])
-# %%
+print("\n lalalala")
+print(testChamp.choseLvl(4).index)
+# %% [markdown]
+# ## Test fonctionalities of class_array
 
+
+# %%

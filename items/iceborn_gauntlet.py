@@ -47,7 +47,13 @@ print(spellblade)
 
 # ## Item Creation
 
-# %run class_item.ipynb
+if __name__ == "__main__":
+    import sys
+    sys.path.append("..")
+    from class_item import Item
+else :
+    from class_item import Item
+import copy
 
 iceborn_dict = {"haste" : iceborn_stats[0], "armor" : iceborn_stats[1], "hp" : iceborn_stats[2],"spellblade" : spellblade}
 
