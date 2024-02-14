@@ -12,7 +12,9 @@
 # | BONUS_HP |
 # |TARGET_MISSING_HP|
 # |TARGET_CURRENT_HP |
-# |critical strike chance|_AS |
+# |CRIT_CHANCE|
+# |AS |
+# |IE|
 
 # %% [markdown]
 # current and mising will be the same i guess

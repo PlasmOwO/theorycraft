@@ -1,6 +1,8 @@
 import pandas as pd
 
 
+# # get base AD from the champ class (without adding objects)
+
 class Array:
     def __init__(self):
         self.array = pd.DataFrame()

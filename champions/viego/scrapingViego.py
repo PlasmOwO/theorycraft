@@ -228,22 +228,43 @@ print("BRK Viego Dmg")
 qPassiveBRKdmgList = [int(x) /100 for x in re.findall(r'\d+', Bonus_Damage()['Bonus Physical Damage'])]
 print(qPassiveBRKdmgList)
 print("\n")
-print("bonus damage 2")
 img_alt_text = 'Blade of the Ruined King'
 divs_above_img = get_divs_above_img(img_alt_text)
 if divs_above_img:
     orange_and_blue_text = get_orange_and_blue_text(divs_above_img)
-    print(orange_and_blue_text)
 physical_damage_table = find_physical_damage_table()
-if physical_damage_table:
-    print("\nPhysical Damage Table:")
-print(physical_damage_table)
+
+qActiveDMGList =  physical_damage_table[0].split(" / ")
+#QactiveRatio
+qActiveRatio = re.findall(r'\d+', physical_damage_table[1])
+#WARNING THIS VALUE IS FLAT ENTRY
+qActiveRatio = str([int(x) /100 for x in qActiveRatio][0]) + "AD" + ")x(1+CRIT_CHANCE)"
+
+qActiveDMG = []
+for i in range(len(qActiveDMGList)):
+    qActiveDMG.append("(" + qActiveDMGList[i] + "+" + qActiveRatio)
+
+print("\nQActive dmg")
+print(qActiveDMG)
+
+# Double tap dmg q passive
+print("\nPassive Double tap dmg")
+print("no crit : ")
+
+doubletap_nocrit= "(" +str(int(re.findall(r'\d',orange_and_blue_text[0])[0])/100) + "+" +str(int(re.findall(r'\d+',orange_and_blue_text[2])[0])/100)+ "AP)AD" 
+print(doubletap_nocrit)
 
 
 
 
 
 # -
+
+#TO MUCH DIFFICULT
+"""print("With crit :")
+doubletap_crit = orange_and_blue_text[1] + orange_and_blue_text[3]
+#((0.35+0.07IE) + (0.2625+0.0525IE)AP )AD
+print(doubletap_crit)"""
 
 # ## Q processing
 
@@ -270,10 +291,16 @@ qBRKval += [qPassiveBRKdmgList[2]] *2
 qBRKval += [qPassiveBRKdmgList[3]] *2
 qBRKval += [qPassiveBRKdmgList[4]] *10
 qBRK = dict(map(lambda i,j : (i,j) , indexLvl,qBRKval))
-
-# +
-#qActiveDmg
 # -
+
+#qActiveDmg
+qActiveDmgVal = []
+qActiveDmgVal += [qActiveDMG[0]] * 3
+qActiveDmgVal += [qActiveDMG[1]] *1
+qActiveDmgVal += [qActiveDMG[2]] *2
+qActiveDmgVal += [qActiveDMG[3]] *2
+qActiveDmgVal += [qActiveDMG[4]] *10
+qActive = dict(map(lambda i,j : (i,j) , indexLvl,qActiveDmgVal))
 
 # ## Ultime Viego  
 
@@ -351,7 +378,9 @@ import copy
 viegoStat['rCD'] = 0
 viegoStat['rMissingHealthDmg'] = 0
 viegoStat['rAutoDmg'] = 0
-viegoStat['qCD'] = {1: cooldown_value[0], 4 : cooldown_value[1] ,5 : cooldown_value[2], 7 : cooldown_value[3],9 : cooldown_value[4] }
+viegoStat['qCD'] = qCD
+viegoStat['qBRK'] = qBRK
+viegoStat['qActive'] = qActive
 for i in range (6,11):
     viegoStat['rCD'][i] = UltimeStat['Ultimate_cooldown'][1]
     viegoStat['rMissingHealthDmg'][i] = str(UltimeStat['R_Physical_missing_health_damages'][1])+ "+" + UltimeStat['R_missing_health_ratio'][1] + "TARGET_MISSING_HP"
@@ -368,7 +397,7 @@ for i in range  (16,19):
 
 viegoStat['passive'] = "+".join(pViegoList)
 viegoStat['wCD'] = wViegoCD
-
+viegoStat['qDoubletap'] = doubletap_nocrit
 print(viegoStat)
 #Viego Wdmg + ratio
 #qdmg + ratio
