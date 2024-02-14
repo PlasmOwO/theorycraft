@@ -28,40 +28,36 @@ import pandas as pd
 import numpy as np
 
 from class_item import Item
+from champions.class_champion import Champion
 import items.BRK as brk
+import champions.viego.scrapingViego as viego
 import class_array
 #import items.class_item
 
 # %%
-print(brk.createBRK(False))
-
-print(brk.createBRK())
-
-from champions.class_champion import Champion
-
-dfTest = pd.DataFrame({'ad' : range(500,1000,100)})
-
-dfTest
-
-testChamp =Champion("viego",dfTest)
-
-print(testChamp)
-
+testChamp = viego.createViego()
 testBrk = brk.createBRK()
-print(testBrk.stats['ad'])
 
-# On veut que la fonction addItem, additionne, parmis les colonnes commune (label) toutes les lignes de cette colonne par la stat de l'objet
-
-import numpy as np
-
+# Ajouter des éléments à testChamp
 testChamp.addItem(testBrk)
 
-print(testChamp)
+# Afficher les statistiques après l'ajout
+print(testChamp.stats)
+
 
 print("\n lalalala")
 print(testChamp.choseLvl(4).index)
 # %% [markdown]
 # ## Test fonctionalities of class_array
 
+
+# %%
+testArray = class_array.Array()
+
+# %%
+testArray.append(testChamp.stats.columns, testChamp.choseLvl(5))
+
+# %%
+print(testArray)
 
 # %%

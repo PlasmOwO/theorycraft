@@ -32,8 +32,8 @@ class Champion:
         self.name = name
         self.stats = base_stats
 
-    def __str__(self):
-        return self.name + "\n" + self.stats.to_string()
+    def __repr__(self):
+        return self.stats.to_string()
  
 
     def addItem(self,item):

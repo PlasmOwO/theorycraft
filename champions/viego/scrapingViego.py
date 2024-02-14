@@ -52,15 +52,12 @@ ad_list = [(float(ad.text) + float(ad_lvl.text) * (n-1) *(0.7025 +0.0175 * (n-1)
 attack_speed = html.findAll('div', {"style" : "width: calc(1 / 2 * 100%);"})
 attack_speed = attack_speed[10]
 attack_speed = float(re.sub(r'[^0-9.,]', '', attack_speed.text))
-print(attack_speed)
 
 bonus_as_lvl = html.findAll('div', {"style" : "width: calc(1 / 2 * 100%);"})
 bonus_as_lvl = bonus_as_lvl[13]
 bonus_as_lvl = float(re.sub(r'[^0-9.,]', '', bonus_as_lvl.text))
 bonus_as_lvl /=100
-print(bonus_as_lvl)
 bonus_as_list = [ float(bonus_as_lvl) * (n-1) *(0.7025 +0.0175 * (n-1)) for n in range(1,19)]
-print(bonus_as_list)
 
 # RATIO = 0.658
 # Formule total AS : *TOTAL = base + ratio*bonus
@@ -68,7 +65,7 @@ print(bonus_as_list)
 ratio = 0.658
 
 as_list = [ attack_speed + ratio*bonus_as_list[n]  for n in range(0,18)]
-print(as_list)
+
 
 viegoStat = pd.DataFrame(index=range(1,19),columns=['hp','armor','magic_res','ad','as'])
 viegoStat['hp'] = hp_list
@@ -76,7 +73,7 @@ viegoStat['armor'] = armor_list
 viegoStat['magic_res'] = rm_list
 viegoStat['ad'] = ad_list
 viegoStat['as'] = bonus_as_list #Ici c'est le bonus d'attaque speed, il faut additionner les autres bonus
-viegoStat
+
 
 # ## Scraping passive and W
 
@@ -97,15 +94,12 @@ try :
     
     wViegoCD = wViego.find("div",{"class" : "pi-data-value pi-font"}).text # W cd
 
-    print(pViegoList)
 except AttributeError:
     print("error")
 
 wViegoRatio = str(int(re.sub(r'[^0-9.,]','',re.search(r'\(([^)]+)\)', wViego.find("dd").text).group(1) if re.search(r'\(([^)]+)\)', wViego.find("dd").text) else None))/100) + "AP"
 wViegoDmg = list(map(int,re.sub(r'\([^)]+\)', '', wViego.find("dd").text).split("/")))
-print(wViegoDmg)
-print(wViegoCD)
-print(wViegoRatio)
+
 
 wViegoAll = [str(x)+"+"+wViegoRatio for x in wViegoDmg]
 
@@ -230,13 +224,10 @@ def find_physical_damage_span():
 cooldown_value = get_cooldown_value()
 cooldown_value = format_to_list(cooldown_value)
 
-print("Cooldown\n")
-print(cooldown_value)
-print("\n")
-print("BRK Viego Dmg")
+
+
 qPassiveBRKdmgList = [int(x) /100 for x in re.findall(r'\d+', Bonus_Damage()['Bonus Physical Damage'])]
-print(qPassiveBRKdmgList)
-print("\n")
+
 img_alt_text = 'Blade of the Ruined King'
 divs_above_img = get_divs_above_img(img_alt_text)
 if divs_above_img:
@@ -253,19 +244,11 @@ qActiveDMG = []
 for i in range(len(qActiveDMGList)):
     qActiveDMG.append("(" + qActiveDMGList[i] + "+" + qActiveRatio)
 
-print("\nQActive dmg")
-print(qActiveDMG)
 
 # Double tap dmg q passive
-print("\nPassive Double tap dmg")
-print("no crit : ")
+
 
 doubletap_nocrit= "(" +str(int(re.findall(r'\d',orange_and_blue_text[0])[0])/100) + "+" +str(int(re.findall(r'\d+',orange_and_blue_text[2])[0])/100)+ "AP)AD" 
-print(doubletap_nocrit)
-
-
-
-
 
 # -
 
@@ -393,7 +376,7 @@ if __name__ == "__main__":
     sys.path.append("..")
     from class_champion import Champion
 else :
-    from class_champion import Champion
+    from champions.class_champion import Champion
 import copy
 
 # +
@@ -418,15 +401,23 @@ for i in range  (16,19):
     viegoStat['rMissingHealthDmg'][i] = str(UltimeStat['R_Physical_missing_health_damages'][3])+ "+" + UltimeStat['R_missing_health_ratio'][3] + "TARGET_MISSING_HP"
     viegoStat['rAutoDmg'][i] = UltimeStat['R_auto_dmg'][1]
 
-viegoStat['passive'] = "+".join(pViegoList)
+viegoStat['viegoPassiveRegen'] = "+".join(pViegoList)
 viegoStat['wCD'] = wViegoCD
 viegoStat['qDoubletap'] = doubletap_nocrit
+viegoStat['base_ad'] = viegoStat['ad']
+viegoStat['base_hp'] = viegoStat['hp']
 print(viegoStat)
 
 
 viegoBase = Champion("viego",viegoStat)
+
+
 # -
 
-print(viegoBase)
+def createViego():
+    return Champion("viego", viegoStat)
+
+
+createViego().stats
 
 
