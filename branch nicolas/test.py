@@ -1,164 +1,133 @@
-import requests
-from bs4 import BeautifulSoup
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QTableWidget, QTableWidgetItem, QPushButton, QLabel, QHBoxLayout
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QColor
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+import matplotlib.pyplot as plt
+import numpy as np
+import sys
 
-class ChampionScraper:
-    def __init__(self, url):
-        self.url = url
-        self.soup = self.get_soup()
+class CharacterSelectionWindow(QMainWindow):
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
-    def get_soup(self):
-        response = requests.get(self.url)
-        return BeautifulSoup(response.text, "html.parser")
+        self.setWindowTitle("Sélectionnez un personnage")
+        self.setGeometry(100, 100, 400, 200)
+        self.setStyleSheet("background-color: #2c3e50; color: white;")
 
-    def find_element_by_label(self, label, class_name):
-        balise_h3 = self.soup.find('h3', class_='pi-data-label {}'.format(class_name), string=label)
+        layout = QVBoxLayout()
 
-        if balise_h3:
-            balise_suivante = balise_h3.find_next_sibling()
+        # Création des boutons pour sélectionner le personnage
+        self.character_buttons = []
+        for i in range(1, 4):  # Changez le nombre de personnages si nécessaire
+            button = QPushButton(f"Personnage {i}")
+            button.setStyleSheet("background-color: #34495e; color: white; border-radius: 5px;")
+            button.clicked.connect(lambda _, character=i: self.openCharacterStats(character))
+            self.character_buttons.append(button)
+            layout.addWidget(button)
 
-            if balise_suivante:
-                return balise_suivante.text.strip()
+        central_widget = QWidget()
+        central_widget.setLayout(layout)
+        central_widget.setStyleSheet("background-color: #2c3e50; color: white;")
+        self.setCentralWidget(central_widget)
 
-        return None
+    def openCharacterStats(self, character):
+        self.character_stats_window = CharacterStatsWindow(character)
+        self.character_stats_window.show()
+        self.close()
 
-    def get_cooldown_value(self):
-        return self.find_element_by_label('COOLDOWN:', 'pi-secondary-font')
 
-    def get_bonus_physical_damage(self):
-        balises_dl = self.soup.find_all('dl', class_='skill-tabs')
-    
-        for balise_dl in balises_dl:
-            dt = balise_dl.find('dt')
-            dd = balise_dl.find('dd')
-            
-            if dt and dd:
-                texte = dd.find('span', style="color: #1F995C; white-space:normal")
-        return texte
+class CharacterStatsWindow(QMainWindow):
+    def __init__(self, character, parent=None):
+        super().__init__(parent)
 
-    def Bonus_Damage(self):
-        stats_div = self.soup.find('div', {'style': 'padding: 0 7px'})
+        self.setWindowTitle(f"Stats en radar de Personnage {character}")
+        self.setGeometry(100, 100, 800, 600)
+        self.setStyleSheet("background-color: #2c3e50; color: #2c3e50;")
 
-        if stats_div:
-            stats_dl_list = stats_div.find_all('dl', class_='skill-tabs')
-            stats = {}
+        self.initUI(character)
 
-            for stats_dl in stats_dl_list:
-                dt = stats_dl.find('dt')
-                dd = stats_dl.find('dd')
+    def initUI(self, character):
+        central_widget = QWidget()
+        central_widget.setStyleSheet("background-color: #2c3e50; color: #2c3e50;")
+        self.setCentralWidget(central_widget)
 
-                if dt and dd:
-                    label = dt.text.strip().replace(':', '')
-                    value = dd.text.strip()
-                    stats[label] = value
-            return stats
+        layout = QHBoxLayout(central_widget)
 
-        return None
+        # Création du tableau pour afficher les statistiques
+        self.stats_table = QTableWidget()
+        self.stats_table.setColumnCount(3)
+        self.stats_table.setHorizontalHeaderLabels(["Statistique", "Valeur", "Description"])
+        self.stats_table.setStyleSheet("background-color: #2c3e50; color: #2c3e50; gridline-color: #2c3e50;")
 
-    def format_to_list(self, chaine):
-        nombres = []
-        nombre_temporaire = ""
-        est_dans_nombre = False
+        # Définir la couleur de fond des titres de colonne et de ligne
+        self.stats_table.horizontalHeader().setStyleSheet("background-color: #34495e; color: #2c3e50;")
+        self.stats_table.verticalHeader().setStyleSheet("background-color: #34495e; color: #2c3e50;")
 
-        for caractere in chaine:
-            if caractere.isdigit() or caractere == '.':
-                nombre_temporaire += caractere
-                est_dans_nombre = True
-            elif est_dans_nombre:
-                nombres.append(float(nombre_temporaire))
-                nombre_temporaire = ""
-                est_dans_nombre = False
+        # Création du graphique en radar pour afficher les statistiques
+        self.radar_canvas = RadarCanvas()
 
-        if est_dans_nombre:
-            nombres.append(float(nombre_temporaire))
+        # Ajout des widgets au layout
+        layout.addWidget(self.stats_table)
+        layout.addWidget(self.radar_canvas)
 
-        return nombres
-    
-    def get_soup(self):
-        response = requests.get(self.url)
-        return BeautifulSoup(response.text, "html.parser")
-    
-    '''
-    extrait le text sans balise
-    '''
-    def extract_text_without_tags(self, element):
-        """
-        Extract text content from HTML without any tags.
-        """
-        result = []
-        for item in element.children:
-            if isinstance(item, str):
-                if item != "\n":
-                    result.append(item)
-            else:
-                result += self.extract_text_without_tags(item)
+        # Mise à jour des statistiques et du graphique radar
+        self.updateStats(character)
 
-        return result
+    def updateStats(self, character):
+        # Exemple de données de statistiques pour les personnages (à remplacer par vos données réelles)
+        stats_data = [
+            ("Force", 80, "Capacité de porter des objets lourds"),
+            ("Agilité", 65, "Capacité à se déplacer rapidement"),
+            ("Intelligence", 90, "Capacité à comprendre et apprendre"),
+            ("Endurance", 75, "Capacité à résister à la fatigue"),
+            ("Charisme", 85, "Capacité à influencer les autres")
+        ]
 
-    def get_divs_above_img(self, img_alt_text):
-        img_tag = self.soup.find('img', alt=img_alt_text)
+        # Met à jour le tableau avec les statistiques du personnage sélectionné
+        self.stats_table.setRowCount(len(stats_data))
+        for i, (stat, value, description) in enumerate(stats_data):
+            self.stats_table.setItem(i, 0, QTableWidgetItem(stat))
+            self.stats_table.setItem(i, 1, QTableWidgetItem(str(value)))
+            self.stats_table.setItem(i, 2, QTableWidgetItem(description))
+            for j in range(3):  # Changer la couleur du texte dans chaque cellule du tableau
+                self.stats_table.item(i, j).setForeground(Qt.white)
 
-        if img_tag:
-            parent_div = img_tag.find_parent('div')
-            divs_above = parent_div.find_all_previous('div', limit=1)
+        # Met à jour le graphique en radar avec les statistiques du personnage sélectionné
+        self.radar_canvas.plot(character, stats_data)
 
-            return divs_above
 
-        return None
-    def get_orange_and_blue_text(self, divs_above_img):
-        # color #7A6DFF bleu et orange
-        orange_and_blue_text = []
+class RadarCanvas(FigureCanvas):
+    def __init__(self):
+        self.fig, self.ax = plt.subplots(figsize=(4, 4), subplot_kw=dict(polar=True))
+        super().__init__(self.fig)
+        self.ax.set_ylim(0, 100)  # Réglage de la limite de l'axe y
+        self.ax.set_yticks(np.arange(0, 101, 20))  # Réglage des marques de l'axe y
 
-        for div in divs_above_img:
-            orange_text = div.find_all('span', style="color:orange; white-space:normal",limit=2)
-            blue_text = div.find_all('span', style="color: #7A6DFF; white-space:normal")
+    def plot(self, character, stats_data):
+        stats = [value for _, value, _ in stats_data]  # Récupération des valeurs des statistiques
+        labels = [stat for stat, _, _ in stats_data]  # Récupération des noms des statistiques
 
-            for text in orange_text:
-                orange_and_blue_text.append(text.get_text(strip=True))
+        # Création des angles pour les différentes statistiques
+        angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False).tolist()
 
-            for text in blue_text:
-                orange_and_blue_text.append(text.get_text(strip=True))
+        # Fermer le polygone
+        stats = np.concatenate((stats, [stats[0]]))
+        angles += angles[:1]
 
-        return orange_and_blue_text
-    
-    def find_physical_damage_table(self):
-        physical_damage_span = self.soup.find('span', {'class': 'template_lc'}, string='Physical Damage:')
-        if physical_damage_span:
-            table = physical_damage_span.find_previous('table')
-            dd_elements = table.find('dd', class_='')
-            dd_texts = [dd.get_text(strip=True) for dd in dd_elements]
-
-        return dd_texts
-    
-    def find_physical_damage_span(self):
-        return self.soup.find('span', {'class': 'template_lc'}, string='Physical Damage:')
-    
-    
-    def main(self):
-        cooldown_value = self.get_cooldown_value()
-        cooldown_value = self.format_to_list(cooldown_value)
-
-        print("Cooldown\n")
-        print(cooldown_value)
-        print("\n")
-        print("Bonus Damage Max/Min")
-        print(self.Bonus_Damage())
-        print("\n")
-        print("Heartbreaker BONUS PHYSICAL DAMAGE")
-        print(self.get_bonus_physical_damage()) 
-        print("\n")
-        print("bonus damage 2")
-        img_alt_text = 'Blade of the Ruined King'
-        divs_above_img = self.get_divs_above_img(img_alt_text)
-        if divs_above_img:
-            orange_and_blue_text = self.get_orange_and_blue_text(divs_above_img)
-            print(orange_and_blue_text)
-        physical_damage_table = self.find_physical_damage_table()
-        if physical_damage_table:
-            print("\nPhysical Damage Table:")
-            print(physical_damage_table)
-
+        # Tracer le radar
+        self.ax.clear()
+        self.ax.plot(angles, stats, 'o-', linewidth=2, color='#ff5733')  # Couleur orange
+        self.ax.fill(angles, stats, alpha=0.25, color='#ffab66')  # Remplissage orange clair
+        self.ax.set_yticklabels([])  # Supprimer les étiquettes de l'axe y
+        self.ax.set_xticks(angles[:-1])
+        self.ax.set_xticklabels(labels, color='white')  # Couleur blanche pour les étiquettes
+        self.ax.set_title(f"Stats en radar de Personnage {character}", size=14, color='white')  # Couleur blanche pour le titre
+        self.ax.set_facecolor('#2c3e50')  # Fond gris foncé pour le graphique
+        self.draw()
 
 
 if __name__ == "__main__":
-    scraper = ChampionScraper("https://leagueoflegends.fandom.com/wiki/Viego/LoL")
-    scraper.main()
+    app = QApplication(sys.argv)
+    window = CharacterSelectionWindow()
+    window.show()
+    sys.exit(app.exec_())
