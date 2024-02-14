@@ -78,6 +78,8 @@ viegoStat['ad'] = ad_list
 viegoStat['as'] = bonus_as_list #Ici c'est le bonus d'attaque speed, il faut additionner les autres bonus
 viegoStat
 
+# ## Scraping passive and W
+
 pViego = html.find("div" ,{'class' : 'skill skill_innate' })
 wViego = html.find("div", {"class" : "skill skill_w"})
 
@@ -105,6 +107,12 @@ print(wViegoDmg)
 print(wViegoCD)
 print(wViegoRatio)
 
+wViegoAll = [str(x)+"+"+wViegoRatio for x in wViegoDmg]
+
+
+# -
+
+# ## Scraping Q spell
 
 # +
 
@@ -217,7 +225,8 @@ def find_physical_damage_table():
 def find_physical_damage_span():
     return html.find('span', {'class': 'template_lc'}, string='Physical Damage:')
 
-# ancien main
+
+#Scraping viego Q spell
 cooldown_value = get_cooldown_value()
 cooldown_value = format_to_list(cooldown_value)
 
@@ -302,6 +311,23 @@ qActiveDmgVal += [qActiveDMG[3]] *2
 qActiveDmgVal += [qActiveDMG[4]] *10
 qActive = dict(map(lambda i,j : (i,j) , indexLvl,qActiveDmgVal))
 
+# ## W processing
+
+# +
+wDmgval = []
+
+wDmgval += [0] * 1
+wDmgval += [wViegoAll[0]] *13
+wDmgval += [wViegoAll[1]] *1
+wDmgval += [wViegoAll[2]] *2
+wDmgval += [wViegoAll[3]] *1
+wDmgval += [wViegoAll[4]] *1
+wDmg = dict(map(lambda i,j : (i,j) , indexLvl,wDmgval))
+
+# +
+# QWEQQRQEQEREEWWRWW
+# -
+
 # ## Ultime Viego  
 
 # Ultime Cooldown 
@@ -362,10 +388,6 @@ UltimeStat
 
 # Creation object
 
-# +
-# QWEQQRQEQEREEWWRWW
-# -
-
 if __name__ == "__main__":
     import sys
     sys.path.append("..")
@@ -381,6 +403,7 @@ viegoStat['rAutoDmg'] = 0
 viegoStat['qCD'] = qCD
 viegoStat['qBRK'] = qBRK
 viegoStat['qActive'] = qActive
+viegoStat['wDmg'] = wDmg
 for i in range (6,11):
     viegoStat['rCD'][i] = UltimeStat['Ultimate_cooldown'][1]
     viegoStat['rMissingHealthDmg'][i] = str(UltimeStat['R_Physical_missing_health_damages'][1])+ "+" + UltimeStat['R_missing_health_ratio'][1] + "TARGET_MISSING_HP"
@@ -399,11 +422,7 @@ viegoStat['passive'] = "+".join(pViegoList)
 viegoStat['wCD'] = wViegoCD
 viegoStat['qDoubletap'] = doubletap_nocrit
 print(viegoStat)
-#Viego Wdmg + ratio
-#qdmg + ratio
-#qcd
-#r cd
-#rdmg + ratio (autre code)
+
 
 viegoBase = Champion("viego",viegoStat)
 # -
