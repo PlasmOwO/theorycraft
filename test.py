@@ -6,11 +6,16 @@
 # |----------
 # | BONUS_AD ||
 # | AD       |
+# | BASE_AD |
 # | AP       |
 # | HP       |
-# | BONUS
+# | BONUS_HP |
 # |TARGET_MISSING_HP|
+# |TARGET_CURRENT_HP |
 # |critical strike chance|_AS |
+
+# %% [markdown]
+# current and mising will be the same i guess
 
 # %%
 # utiliser sys.path

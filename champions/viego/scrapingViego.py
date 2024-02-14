@@ -107,9 +107,6 @@ print(wViegoRatio)
 
 
 # +
-# q w e - q - q - r - q - e -q -e -r -e  -w  -e- w -r -w-w
-
-# +
 
 def find_element_by_label(label, class_name):
     if html is None:
@@ -227,8 +224,9 @@ cooldown_value = format_to_list(cooldown_value)
 print("Cooldown\n")
 print(cooldown_value)
 print("\n")
-print("Bonus Damage Max/Min")
-print(Bonus_Damage())
+print("BRK Viego Dmg")
+qPassiveBRKdmgList = [int(x) /100 for x in re.findall(r'\d+', Bonus_Damage()['Bonus Physical Damage'])]
+print(qPassiveBRKdmgList)
 print("\n")
 print("bonus damage 2")
 img_alt_text = 'Blade of the Ruined King'
@@ -242,6 +240,39 @@ if physical_damage_table:
 print(physical_damage_table)
 
 
+
+
+
+# -
+
+# ## Q processing
+
+# +
+#qCD into stats tab
+indexLvl = range(1,19)
+qCDval = []
+qCDval += [cooldown_value[0]] * 3
+qCDval += [cooldown_value[1]] *1
+qCDval += [cooldown_value[2]] *2
+qCDval += [cooldown_value[3]] *2
+qCDval += [cooldown_value[4]] *10
+
+qCD = dict(map(lambda i,j : (i,j) , indexLvl,qCDval))
+
+
+# +
+#qPassiveBRK
+qBRKval = []
+
+qBRKval += [qPassiveBRKdmgList[0]] * 3
+qBRKval += [qPassiveBRKdmgList[1]] *1
+qBRKval += [qPassiveBRKdmgList[2]] *2
+qBRKval += [qPassiveBRKdmgList[3]] *2
+qBRKval += [qPassiveBRKdmgList[4]] *10
+qBRK = dict(map(lambda i,j : (i,j) , indexLvl,qBRKval))
+
+# +
+#qActiveDmg
 # -
 
 # ## Ultime Viego  
@@ -302,6 +333,12 @@ UltimeStat['R_missing_health_ratio'] = str(int(re.sub(r'[^0-9.,]','',after_paren
 UltimeStat['R_auto_dmg'] = lr
 UltimeStat
 
+# Creation object
+
+# +
+# QWEQQRQEQEREEWWRWW
+# -
+
 if __name__ == "__main__":
     import sys
     sys.path.append("..")
@@ -314,6 +351,7 @@ import copy
 viegoStat['rCD'] = 0
 viegoStat['rMissingHealthDmg'] = 0
 viegoStat['rAutoDmg'] = 0
+viegoStat['qCD'] = {1: cooldown_value[0], 4 : cooldown_value[1] ,5 : cooldown_value[2], 7 : cooldown_value[3],9 : cooldown_value[4] }
 for i in range (6,11):
     viegoStat['rCD'][i] = UltimeStat['Ultimate_cooldown'][1]
     viegoStat['rMissingHealthDmg'][i] = str(UltimeStat['R_Physical_missing_health_damages'][1])+ "+" + UltimeStat['R_missing_health_ratio'][1] + "TARGET_MISSING_HP"
@@ -331,6 +369,7 @@ for i in range  (16,19):
 viegoStat['passive'] = "+".join(pViegoList)
 viegoStat['wCD'] = wViegoCD
 
+print(viegoStat)
 #Viego Wdmg + ratio
 #qdmg + ratio
 #qcd
