@@ -38,10 +38,8 @@ import class_array
 # %%
 #Create a champion object containing a .stats attribute which is a dataframe
 testChamp = viego.createViego()
-print(testChamp.stats)
 #Create a brk object
 testBrk = brk.createBRK()
-print(testBrk.stats)
 #create a kraken object
 testKraken = kraken_slayer.createKraken()
 

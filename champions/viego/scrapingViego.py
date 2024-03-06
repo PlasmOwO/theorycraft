@@ -415,7 +415,8 @@ viegoBase = Champion("viego",viegoStat)
 # -
 
 def createViego():
-    return Champion("viego", viegoStat)
+    stats = viegoStat.copy()
+    return Champion("viego", stats)
 
 
 createViego().stats
