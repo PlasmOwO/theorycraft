@@ -25,17 +25,3 @@ class Array:
         pass
         #Ajouter des colonnes
         #Automatiser le calcul de ses colonnes en fonction des valeurs brutes
-
-testArray = Array()
-
-print(testArray)
-
-idx = ['ad','as','ms','armor']
-
-val = ['80','70','50','10']
-
-testArray.append(idx,val)
-
-print(testArray)
-
-

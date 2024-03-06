@@ -59,7 +59,7 @@ for idx,stats in enumerate(brk_stat):
 brk_stat = list(map(int,brk_stat))
 brk_stat[1] /=100
 brk_stat[2] /=100
-print(brk_stat)
+brk_stat
 
 
 # ## HP % Passive
@@ -91,20 +91,19 @@ brk_passive_range
 
 
 brk_3autos = html.find("span",{"style" : "position:relative; border-bottom:1px dotted; cursor:help;"})
-print(brk_3autos['data-bot_values'])
-print(brk_3autos['data-top_values'])
+
 
 
 # %%
 
 
 three_autos_lvl = brk_3autos['data-top_values'].split(";")
-print(three_autos_lvl)
+
 three_autos_dmg = brk_3autos['data-bot_values'].split(";")
-print(three_autos_dmg)
+
 
 three_autos_dict = {key: value for key, value in zip(three_autos_lvl, three_autos_dmg)}
-print(three_autos_dict)
+three_autos_dict
 
 
 # ## Item creation
@@ -135,13 +134,6 @@ brk_dict_range['passive'] = brk_passive_range
 
 BRK_melee = Item("brk", brk_dict)
 BRK_range = Item("brk", brk_dict_range)
-
-
-# %%
-
-
-print(BRK_melee)
-print(BRK_range)
 
 
 # %%

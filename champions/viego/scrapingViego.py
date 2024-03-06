@@ -252,12 +252,6 @@ doubletap_nocrit= "(" +str(int(re.findall(r'\d',orange_and_blue_text[0])[0])/100
 
 # -
 
-#TO MUCH DIFFICULT
-"""print("With crit :")
-doubletap_crit = orange_and_blue_text[1] + orange_and_blue_text[3]
-#((0.35+0.07IE) + (0.2625+0.0525IE)AP )AD
-print(doubletap_crit)"""
-
 # ## Q processing
 
 # +
@@ -406,8 +400,6 @@ viegoStat['wCD'] = wViegoCD
 viegoStat['qDoubletap'] = doubletap_nocrit
 viegoStat['base_ad'] = viegoStat['ad']
 viegoStat['base_hp'] = viegoStat['hp']
-print(viegoStat)
-
 
 viegoBase = Champion("viego",viegoStat)
 

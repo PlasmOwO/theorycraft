@@ -36,31 +36,18 @@ import class_array
 #import items.class_item
 
 # %%
-#Create a champion object containing a .stats attribute which is a dataframe
-testChamp = viego.createViego()
-#Create a brk object
 testBrk = brk.createBRK()
-#create a kraken object
 testKraken = kraken_slayer.createKraken()
 
-# Ajouter des éléments à testChamp
-testChamp.addItem(testBrk)
-
-testChamp.addItem(testKraken)
-
-
-# Afficher les statistiques après l'ajout
-print(testChamp.stats)
-
-
-print("\n lalalala")
-print(testChamp.choseLvl(4).index)
 # %%
-print(testBrk.stats)
+print(testBrk)
 
 # %%
-print(testChamp.stats)
-
+#Create a champion object containing a .stats attribute which is a dataframe
+viegoBRK = viego.createViego()
+viegoBRK.addItem(testBrk)
+viegoKraken = viego.createViego()
+viegoKraken.addItem(testKraken)
 # %% [markdown]
 # ## Test fonctionalities of class_array
 
@@ -69,9 +56,10 @@ print(testChamp.stats)
 testArray = class_array.Array()
 
 # %%
-testArray.append(testChamp.stats.columns, testChamp.choseLvl(5))
+testArray.append(viegoBRK.stats.columns, viegoBRK.choseLvl(5))
+testArray.append(viegoKraken.stats.columns, viegoKraken.choseLvl(5))
 
 # %%
-print(testArray)
+testArray.array
 
 # %%

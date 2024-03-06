@@ -38,7 +38,7 @@ for idx,stats in enumerate(kraken_stats):
 kraken_stats = list(map(int,kraken_stats))
 kraken_stats[1] /=100
 kraken_stats[2] /=100
-print(kraken_stats)
+kraken_stats
 # -
 
 # ## On-hit proc  
@@ -48,8 +48,7 @@ print(kraken_stats)
 bring_it_down = html.find("span", {"style" : "position:relative; border-bottom:1px dotted; cursor:help;"})
 bring_it_down_index = bring_it_down['data-top_values']
 bring_it_down = bring_it_down['data-bot_values']
-print(bring_it_down_index)
-print(bring_it_down)
+
 
 # +
 bring_it_down_index = bring_it_down_index.split(";")
@@ -57,7 +56,7 @@ bring_it_down = bring_it_down.split(";")
 bring_it_down = [float(x) for x in bring_it_down]
 
 bring_passive = {key : value for key, value in zip(bring_it_down_index,bring_it_down)}
-print(bring_passive)
+bring_passive
 # -
 
 # ## Item Creation
@@ -78,8 +77,6 @@ kraken_dict['three_autos'] = bring_passive
 
 
 Kraken = Item("kraken", kraken_dict)
-
-print(Kraken)
 
 
 def createKraken():
