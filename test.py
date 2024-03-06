@@ -30,16 +30,26 @@ import numpy as np
 from class_item import Item
 from champions.class_champion import Champion
 import items.BRK as brk
+import items.kraken_slayer as kraken_slayer
 import champions.viego.scrapingViego as viego
 import class_array
 #import items.class_item
 
 # %%
+#Create a champion object containing a .stats attribute which is a dataframe
 testChamp = viego.createViego()
+print(testChamp.stats)
+#Create a brk object
 testBrk = brk.createBRK()
+print(testBrk.stats)
+#create a kraken object
+testKraken = kraken_slayer.createKraken()
 
 # Ajouter des éléments à testChamp
 testChamp.addItem(testBrk)
+
+testChamp.addItem(testKraken)
+
 
 # Afficher les statistiques après l'ajout
 print(testChamp.stats)
@@ -47,6 +57,12 @@ print(testChamp.stats)
 
 print("\n lalalala")
 print(testChamp.choseLvl(4).index)
+# %%
+print(testBrk.stats)
+
+# %%
+print(testChamp.stats)
+
 # %% [markdown]
 # ## Test fonctionalities of class_array
 

@@ -1,5 +1,18 @@
-#!/usr/bin/env python
-# coding: utf-8
+# ---
+# jupyter:
+#   jupytext:
+#     formats: ipynb,py:percent
+#     text_representation:
+#       extension: .py
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.15.2
+#   kernelspec:
+#     display_name: Python 3 (ipykernel)
+#     language: python
+#     name: python3
+# ---
+
 # %%
 
 # # Web scraping stat BRK
@@ -112,7 +125,7 @@ import copy
 
 brk_dict = {"ad" : brk_stat[0], "as" : brk_stat[1], "lifesteal" : brk_stat[2]}
 brk_dict['passive'] = brk_passive
-brk_dict['three_autos'] = three_autos_dict
+#brk_dict['three_autos'] = three_autos_dict
 brk_dict_range = copy.deepcopy(brk_dict)
 brk_dict_range['passive'] = brk_passive_range
 
@@ -137,3 +150,5 @@ def createBRK(melee : bool = True):
         return Item("brk", brk_dict)
     else:
         return Item("brk", brk_dict_range)
+
+# %%

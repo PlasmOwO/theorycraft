@@ -54,6 +54,7 @@ print(bring_it_down)
 # +
 bring_it_down_index = bring_it_down_index.split(";")
 bring_it_down = bring_it_down.split(";")
+bring_it_down = [float(x) for x in bring_it_down]
 
 bring_passive = {key : value for key, value in zip(bring_it_down_index,bring_it_down)}
 print(bring_passive)
@@ -79,3 +80,7 @@ kraken_dict['three_autos'] = bring_passive
 Kraken = Item("kraken", kraken_dict)
 
 print(Kraken)
+
+
+def createKraken():
+    return Item("kraken", kraken_dict)
