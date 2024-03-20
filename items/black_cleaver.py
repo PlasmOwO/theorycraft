@@ -36,7 +36,6 @@ for idx,stats in enumerate(bc_stats):
 
 # take account of %
 bc_stats = list(map(int,bc_stats))
-print(bc_stats)
 # -
 
 # ## Armor Shred
@@ -68,4 +67,6 @@ import copy
 bc_dict = {"ad" : bc_stats[0], "haste" : bc_stats[1], "hp" : bc_stats[2],"passive_one_stack" : bc_passiv_one_stack, "passive_armor_shred" : bc_passiv}
 Black_cleaver = Item("black_cleaver", bc_dict)
 
-print(Black_cleaver)
+
+def createBC():
+    return Item("black cleaver",bc_dict)

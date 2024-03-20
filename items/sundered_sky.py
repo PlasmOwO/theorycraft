@@ -20,7 +20,6 @@ for idx,stats in enumerate(sundered):
 
 # take account of %
 sundered = list(map(int,sundered))
-print(sundered)
 # -
 
 # ## Auto empowered
@@ -50,6 +49,6 @@ sundered_dict['pass_auto'] = empowered_auto
 
 Sundered_sky = Item("sundered_sky",sundered_dict)
 
-print(Sundered_sky)
 
-
+def createSunderedSky():
+    return Item("sundered_sky", sundered_dict)

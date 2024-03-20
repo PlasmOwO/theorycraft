@@ -31,6 +31,9 @@ from class_item import Item
 from champions.class_champion import Champion
 import items.BRK as brk
 import items.kraken_slayer as kraken_slayer
+import items.Titanic_hydra as titanic_hydra
+import items.black_cleaver as black_cleaver
+import items.sundered_sky as sundered_sky
 import champions.viego.scrapingViego as viego
 import class_array
 #import items.class_item
@@ -38,6 +41,9 @@ import class_array
 # %%
 testBrk = brk.createBRK()
 testKraken = kraken_slayer.createKraken()
+testTitanic = titanic_hydra.createTitanic()
+testBC = black_cleaver.createBC()
+testSunderedSky = sundered_sky.createSunderedSky()
 
 # %%
 print(testBrk)
@@ -48,6 +54,16 @@ viegoBRK = viego.createViego()
 viegoBRK.addItem(testBrk)
 viegoKraken = viego.createViego()
 viegoKraken.addItem(testKraken)
+print(len(viegoKraken.stats))
+viegoTitanic = viego.createViego()
+#viegoTitanic.addItem(viegoTitanic)
+#viegoTitanic.stats
+#Not working
+viegoBC = viego.createViego()
+viegoBC.addItem(testBC)
+viegoSundered = viego.createViego()
+viegoSundered.addItem(testSunderedSky)
+
 
 # %% [markdown]
 # ## Test fonctionalities of class_array
@@ -57,15 +73,17 @@ viegoKraken.addItem(testKraken)
 testArray = class_array.Array()
 
 # %%
-testArray.append(viegoBRK.stats.columns, viegoBRK.choseLvl(5))
+testArray.append(viegoBRK.stats.columns, viegoBRK.choseLvl(6))
 testArray.append(viegoKraken.stats.columns, viegoKraken.choseLvl(6))
+testArray.append(viegoBC.stats.columns, viegoBC.choseLvl(6))
+testArray.append(viegoSundered.stats.columns, viegoSundered.choseLvl(6))
 
 # %%
 testArray.array
 
 
 # %%
-print(testArray.array['qDoubletap'])
+print(testArray.array['qDoubletap'][2])
 
 # %%
 testArray.array.columns
@@ -86,6 +104,10 @@ testArray.array.iloc[1]
 #Pour QautoDmg, wauto dmg ainsi que rdmg, il faut appliquer N fois les effets à l'impact
 #Pour la cible, il faut lui choisir PV, ainsi que résistances, et faire un calcul via la pene.
 
+#Calcul des dmg à l'impact (compliqué )
+# Il faut dans un premier temps calculer les degats que fait BRK et passif Q
+# Ensuite je dois créer une colonne qui additionne tous les ON HIT dammage. cependant si la colonne n'existe ps c chiant.
+#Si deja je fais tous les objets on va etre vite régler je pense
 
 # %% [markdown]
 # * rMising health * PV

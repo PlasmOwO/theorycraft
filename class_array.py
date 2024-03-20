@@ -22,7 +22,7 @@ import pandas as pd
 
 def autoCalculColX(arrayBuild, nomCol : str):
     for idx, row in enumerate(arrayBuild[nomCol]):
-        dictVar = {'BONUS_AD' : arrayBuild['ad'][idx] - arrayBuild['base_ad'][idx], 'TARGET_MISSING_HP' : 0.5, 'CRIT_CHANCE': arrayBuild['crit'][idx],'critical strike chance': arrayBuild['crit'][idx], 'BONUS_AS' : arrayBuild['as'][idx], 'AP' : 0.0, 'AD' : arrayBuild['ad'][idx]}
+        dictVar = {'BONUS_AD' : arrayBuild['ad'][idx] - arrayBuild['base_ad'][idx], 'TARGET_MISSING_HP' : 0.5, 'CRIT_CHANCE': arrayBuild['crit'][idx],'critical strike chance': arrayBuild['crit'][idx], 'BONUS_AS' : arrayBuild['as'][idx], 'AP' : 0.0, 'AD' : arrayBuild['ad'][idx], "HP" : arrayBuild['hp'][idx]}
         #dict ici mais global, va chercher la cellule N pour chaque var glob
         arrayBuild[nomCol][idx] = eval(row,dictVar)
 
@@ -57,16 +57,21 @@ class Array:
         ## (exemple : si on a pas de degats on-hit, il faudra tout de meme une colonne dédié à cela)
         ## gérer aussi le cas de la brillance
     def autoCalcul(self):
+        self.array.fillna(0, inplace=True)
+
+        #formula = RATIO = 0.658,  Formule total AS : *TOTAL = base + ratio*bonus
+        self.array['as_per_second'] = self.array['base_as'] + 0.658*self.array['as']
         autoCalculColX(self.array,'rMissingHealthDmg')
         autoCalculColX(self.array,'rAutoDmg')
         autoCalculColX(self.array,'qActive')
- 
         autoCalculColX(self.array,'qDoubletap')
-        
         autoCalculColX(self.array,'wDmg')
         autoCalculColX(self.array,'viegoPassiveRegen')
+        #autoCalculColX(self.array,'titanic_passive')
+        #autoCalculColX(self.array,'titanic_active')
 
 
+        # 0.625 × (1 + 97.35 ÷ 100)
         self.array['qAutoDmg'] = self.array['qActive'] + self.array['ad'] + self.array['qDoubletap']
         self.array['wAutoDmg'] = self.array['wDmg'] + self.array['ad'] + self.array['qDoubletap']
         self.array['rTotalDmg'] = self.array['rAutoDmg'] + self.array['rMissingHealthDmg']

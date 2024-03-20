@@ -73,6 +73,7 @@ viegoStat['armor'] = armor_list
 viegoStat['magic_res'] = rm_list
 viegoStat['ad'] = ad_list
 viegoStat['as'] = bonus_as_list #Ici c'est le bonus d'attaque speed, il faut additionner les autres bonus
+viegoStat['base_as'] = attack_speed
 
 
 # ## Scraping passive and W
