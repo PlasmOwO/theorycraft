@@ -69,9 +69,6 @@ print(testArray.array['rMissingHealthDmg'])
 testArray.array.columns
 
 # %%
-eval("2+1")
-
-# %%
 testArray.autoCalcul()
 print(testArray.array['rMissingHealthDmg'])
 
