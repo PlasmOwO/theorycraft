@@ -17,7 +17,7 @@ import pandas as pd
 
 def autoCalculColX(arrayBuild, nomCol : str):
     for idx, row in enumerate(arrayBuild[nomCol]):
-        dictVar = {'BONUS_AD' : arrayBuild['ad'][idx] - arrayBuild['base_ad'][idx], 'TARGET_MISSING_HP' : 0.5}
+        dictVar = {'BONUS_AD' : arrayBuild['ad'][idx] - arrayBuild['base_ad'][idx], 'TARGET_MISSING_HP' : 0.5, 'CRIT_CHANCE': arrayBuild['crit'],'critical strike chance': arrayBuild['crit'], 'BONUS_AS' : arrayBuild['as'], 'AP' : '0'}
         #dict ici mais global, va chercher la cellule N pour chaque var glob
         arrayBuild[nomCol][idx] = eval(row,dictVar)
 
@@ -25,7 +25,6 @@ def autoCalculColX(arrayBuild, nomCol : str):
 class Array:
     def __init__(self):
         self.array = pd.DataFrame()
-        self.ad_list = ad_list
         
     def __str__(self):
         return self.array.to_string()
@@ -45,11 +44,13 @@ class Array:
         ## gérer aussi le cas de la brillance
     def autoCalcul(self):
         autoCalculColX(self.array,'rMissingHealthDmg')
+        autoCalculColX(self.array,'rAutoDmg')
+        autoCalculColX(self.array,'wDmg')
+        autoCalculColX(self.array,'viegoPassiveRegen')
+        autoCalculColX(self.array,'qDoubletap')
         pass
 
           #Ajouter des colonnes
         #Automatiser le calcul de ses colonnes en fonction des valeurs brutes
-#<<<<<<< Updated upstream
-#=======  
 
 
