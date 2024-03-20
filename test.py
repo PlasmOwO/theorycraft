@@ -78,6 +78,18 @@ print(testArray.array['rMissingHealthDmg'])
 testArray.array
 
 # %%
-testArray.array.iloc[0]
+testArray.array.iloc[1]
+
+# %%
+#rMissing health dmg = Depend des pv adverses
+#qbrk, depend des pv
+#Pour QautoDmg, wauto dmg ainsi que rdmg, il faut appliquer N fois les effets à l'impact
+#Pour la cible, il faut lui choisir PV, ainsi que résistances, et faire un calcul via la pene.
+
+
+# %% [markdown]
+# * rMising health * PV
+# * qbrk * 50% PV
+# * passive * 50% PV
 
 # %%

@@ -66,7 +66,21 @@ class Array:
         autoCalculColX(self.array,'wDmg')
         autoCalculColX(self.array,'viegoPassiveRegen')
 
+
+        self.array['qAutoDmg'] = self.array['qActive'] + self.array['ad'] + self.array['qDoubletap']
+        self.array['wAutoDmg'] = self.array['wDmg'] + self.array['ad'] + self.array['qDoubletap']
+        self.array['rTotalDmg'] = self.array['rAutoDmg'] + self.array['rMissingHealthDmg']
           #Ajouter des colonnes
         #Automatiser le calcul de ses colonnes en fonction des valeurs brutes
+
+
+
+# +
+# e-z auto q-auto R
+# degats du Q / cd
+# degats du W / cd 
+# dmg du R / cd
+# nombre d'attaque par seconde
+# -
 
 
