@@ -1,6 +1,27 @@
 import pandas as pd
 
 
+# | Global vars |
+# |----------
+# | BONUS_AD ||
+# | AD       |
+# | BASE_AD |
+# | AP       |
+# | HP       |
+# | BONUS_HP |
+# |TARGET_MISSING_HP|
+# |TARGET_CURRENT_HP |
+# |CRIT_CHANCE|
+# |AS |
+# |IE|
+
+def autoCalculColX(arrayBuild, nomCol : str):
+    for idx, row in enumerate(arrayBuild[nomCol]):
+        dictVar = {'BONUS_AD' : arrayBuild['ad'][idx] - arrayBuild['base_ad'][idx], 'TARGET_MISSING_HP' : 0.5}
+        #dict ici mais global, va chercher la cellule N pour chaque var glob
+        arrayBuild[nomCol][idx] = eval(row,dictVar)
+
+
 class Array:
     def __init__(self):
         self.array = pd.DataFrame()
@@ -22,6 +43,9 @@ class Array:
         ## (exemple : si on a pas de degats on-hit, il faudra tout de meme une colonne dédié à cela)
         ## gérer aussi le cas de la brillance
     def autoCalcul(self):
+        autoCalculColX(self.array,'rMissingHealthDmg')
         pass
         #Ajouter des colonnes
         #Automatiser le calcul de ses colonnes en fonction des valeurs brutes
+
+

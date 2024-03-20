@@ -374,9 +374,9 @@ else :
 import copy
 
 # +
-viegoStat['rCD'] = 0
-viegoStat['rMissingHealthDmg'] = 0
-viegoStat['rAutoDmg'] = 0
+viegoStat['rCD'] = '0'
+viegoStat['rMissingHealthDmg'] = '0'
+viegoStat['rAutoDmg'] = '0'
 viegoStat['qCD'] = qCD
 viegoStat['qBRK'] = qBRK
 viegoStat['qActive'] = qActive
