@@ -359,7 +359,7 @@ UltimeStat = pd.DataFrame(index=range(1,4))
 UltimeStat['Ultimate_cooldown'] = ultime_cooldown_text.split(" / ")
 UltimeStat['R_Physical_missing_health_damages'] = R_missing_health_dmg
 UltimeStat['R_Physical_missing_health_damages'] = UltimeStat['R_Physical_missing_health_damages']
-UltimeStat['R_missing_health_ratio'] = str(int(re.sub(r'[^0-9.,]','',after_parenthese[0:9]))/10000) + "BONUS_AD"
+UltimeStat['R_missing_health_ratio'] = str(int(re.sub(r'[^0-9.,]','',after_parenthese[0:9]))/10000) + "* BONUS_AD"
 UltimeStat['R_auto_dmg'] = lr
 UltimeStat
 
@@ -383,16 +383,16 @@ viegoStat['qActive'] = qActive
 viegoStat['wDmg'] = wDmg
 for i in range (6,11):
     viegoStat['rCD'][i] = UltimeStat['Ultimate_cooldown'][1]
-    viegoStat['rMissingHealthDmg'][i] = str(UltimeStat['R_Physical_missing_health_damages'][1])+ "+" + UltimeStat['R_missing_health_ratio'][1] + "TARGET_MISSING_HP"
+    viegoStat['rMissingHealthDmg'][i] = "("+ str(UltimeStat['R_Physical_missing_health_damages'][1])+ "+" + UltimeStat['R_missing_health_ratio'][1] + ")*TARGET_MISSING_HP"
     viegoStat['rAutoDmg'][i] = UltimeStat['R_auto_dmg'][1]
 for i in range (11,16):
     viegoStat['rCD'][i] = UltimeStat['Ultimate_cooldown'][2]
-    viegoStat['rMissingHealthDmg'][i] = str(UltimeStat['R_Physical_missing_health_damages'][2])+ "+" + UltimeStat['R_missing_health_ratio'][2] + "TARGET_MISSING_HP"
+    viegoStat['rMissingHealthDmg'][i] = "(" +str(UltimeStat['R_Physical_missing_health_damages'][2])+ "+" + UltimeStat['R_missing_health_ratio'][2] + ")*TARGET_MISSING_HP"
     viegoStat['rAutoDmg'][i] = UltimeStat['R_auto_dmg'][1]
 
 for i in range  (16,19):
     viegoStat['rCD'][i] = UltimeStat['Ultimate_cooldown'][3]
-    viegoStat['rMissingHealthDmg'][i] = str(UltimeStat['R_Physical_missing_health_damages'][3])+ "+" + UltimeStat['R_missing_health_ratio'][3] + "TARGET_MISSING_HP"
+    viegoStat['rMissingHealthDmg'][i] = "(" + str(UltimeStat['R_Physical_missing_health_damages'][3])+ "+" + UltimeStat['R_missing_health_ratio'][3] + ")*TARGET_MISSING_HP"
     viegoStat['rAutoDmg'][i] = UltimeStat['R_auto_dmg'][1]
 
 viegoStat['viegoPassiveRegen'] = "+".join(pViegoList)

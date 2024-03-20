@@ -57,9 +57,15 @@ testArray = class_array.Array()
 
 # %%
 testArray.append(viegoBRK.stats.columns, viegoBRK.choseLvl(5))
-testArray.append(viegoKraken.stats.columns, viegoKraken.choseLvl(5))
+testArray.append(viegoKraken.stats.columns, viegoKraken.choseLvl(6))
 
 # %%
 testArray.array
+
+# %%
+print(testArray.array['rMissingHealthDmg'])
+
+# %%
+eval("2+1")
 
 # %%
