@@ -48,6 +48,7 @@ viegoBRK = viego.createViego()
 viegoBRK.addItem(testBrk)
 viegoKraken = viego.createViego()
 viegoKraken.addItem(testKraken)
+
 # %% [markdown]
 # ## Test fonctionalities of class_array
 
@@ -61,6 +62,7 @@ testArray.append(viegoKraken.stats.columns, viegoKraken.choseLvl(6))
 
 # %%
 testArray.array
+
 
 # %%
 print(testArray.array['rMissingHealthDmg'])

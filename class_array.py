@@ -25,6 +25,7 @@ def autoCalculColX(arrayBuild, nomCol : str):
 class Array:
     def __init__(self):
         self.array = pd.DataFrame()
+        self.ad_list = ad_list
         
     def __str__(self):
         return self.array.to_string()
@@ -45,7 +46,10 @@ class Array:
     def autoCalcul(self):
         autoCalculColX(self.array,'rMissingHealthDmg')
         pass
-        #Ajouter des colonnes
+
+          #Ajouter des colonnes
         #Automatiser le calcul de ses colonnes en fonction des valeurs brutes
+#<<<<<<< Updated upstream
+#=======  
 
 
