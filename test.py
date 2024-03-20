@@ -65,7 +65,7 @@ testArray.array
 
 
 # %%
-print(testArray.array['rMissingHealthDmg'])
+print(testArray.array['qDoubletap'])
 
 # %%
 testArray.array.columns
@@ -73,5 +73,11 @@ testArray.array.columns
 # %%
 testArray.autoCalcul()
 print(testArray.array['rMissingHealthDmg'])
+
+# %%
+testArray.array
+
+# %%
+testArray.array.iloc[0]
 
 # %%

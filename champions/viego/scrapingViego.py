@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.15.2
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -85,11 +85,11 @@ pViegoList = []
 try :
     pViegoList.append(str(float(re.sub(r'[^0-9.,]', '', pViego.find("span", {'style' : "color: #1F995C; white-space:normal"}).text))/100))
     
-    pViegoList.append(str(float(re.sub(r'[^0-9.,]', '',pViego.find("span",{"style" : "color:orange; white-space:normal"}).text[0:10]))/10000) +"BONUS_AD")
+    pViegoList.append(str(float(re.sub(r'[^0-9.,]', '',pViego.find("span",{"style" : "color:orange; white-space:normal"}).text[0:10]))/10000) +" * BONUS_AD")
     
-    pViegoList.append(str(float(re.sub(r'[^0-9.,]', '',pViego.find("span",{"style" : "color: #7A6DFF; white-space:normal"}).text[0:10]))/10000)+"AP")
+    pViegoList.append(str(float(re.sub(r'[^0-9.,]', '',pViego.find("span",{"style" : "color: #7A6DFF; white-space:normal"}).text[0:10]))/10000)+" * AP")
     
-    pViegoList.append(str(float(re.sub(r'[^0-9.,]', '',pViego.find("span",{"style" : "color:orangered; white-space:normal"}).text[0:10]))/10000)+"BONUS_AS")
+    pViegoList.append(str(float(re.sub(r'[^0-9.,]', '',pViego.find("span",{"style" : "color:orangered; white-space:normal"}).text[0:10]))/10000)+" * BONUS_AS")
 
     
     wViegoCD = wViego.find("div",{"class" : "pi-data-value pi-font"}).text # W cd
@@ -97,7 +97,7 @@ try :
 except AttributeError:
     print("error")
 
-wViegoRatio = str(int(re.sub(r'[^0-9.,]','',re.search(r'\(([^)]+)\)', wViego.find("dd").text).group(1) if re.search(r'\(([^)]+)\)', wViego.find("dd").text) else None))/100) + "AP"
+wViegoRatio = str(int(re.sub(r'[^0-9.,]','',re.search(r'\(([^)]+)\)', wViego.find("dd").text).group(1) if re.search(r'\(([^)]+)\)', wViego.find("dd").text) else None))/100) + "* AP"
 wViegoDmg = list(map(int,re.sub(r'\([^)]+\)', '', wViego.find("dd").text).split("/")))
 
 
@@ -238,7 +238,7 @@ qActiveDMGList =  physical_damage_table[0].split(" / ")
 #QactiveRatio
 qActiveRatio = re.findall(r'\d+', physical_damage_table[1])
 #WARNING THIS VALUE IS FLAT ENTRY
-qActiveRatio = str([int(x) /100 for x in qActiveRatio][0]) + "AD" + ")x(1+CRIT_CHANCE)"
+qActiveRatio = str([int(x) /100 for x in qActiveRatio][0]) + " * AD" + ")*(1+CRIT_CHANCE)"
 
 qActiveDMG = []
 for i in range(len(qActiveDMGList)):
@@ -248,7 +248,7 @@ for i in range(len(qActiveDMGList)):
 # Double tap dmg q passive
 
 
-doubletap_nocrit= "(" +str(int(re.findall(r'\d',orange_and_blue_text[0])[0])/100) + "+" +str(int(re.findall(r'\d+',orange_and_blue_text[2])[0])/100)+ "AP)AD" 
+doubletap_nocrit= "(" +str(int(re.findall(r'\d',orange_and_blue_text[0])[0])/100) + "+" +str(int(re.findall(r'\d+',orange_and_blue_text[2])[0])/100)+ "* AP) * AD" 
 
 # -
 
@@ -293,7 +293,7 @@ qActive = dict(map(lambda i,j : (i,j) , indexLvl,qActiveDmgVal))
 # +
 wDmgval = []
 
-wDmgval += [0] * 1
+wDmgval += ['0'] * 1
 wDmgval += [wViegoAll[0]] *13
 wDmgval += [wViegoAll[1]] *1
 wDmgval += [wViegoAll[2]] *2
@@ -328,6 +328,8 @@ else:
 soup = BeautifulSoup(response.content, 'html.parser')
 lr = soup.find("div", {'class' : 'skill skill_r'})
 lr = lr.find('span', {'class' : 'pp-tooltip'})['data-displayformula']
+lr = lr.replace("x","*")
+lr=lr.replace("critical strike chance","CRIT_CHANCE")
 
 # Physical Damage
 

@@ -35,7 +35,7 @@ for idx,stats in enumerate(kraken_stats):
     kraken_stats[idx] = re.search(r'(\d+)', stats.text).group(1)
 
 # take account of %
-kraken_stats = list(map(int,kraken_stats))
+kraken_stats = list(map(float,kraken_stats))
 kraken_stats[1] /=100
 kraken_stats[2] /=100
 kraken_stats
