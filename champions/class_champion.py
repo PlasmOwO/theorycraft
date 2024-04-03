@@ -4,6 +4,7 @@
 
 # # Class of champions
 import numpy as np
+import pandas as pd
 
 
 def extract_values(df):
@@ -42,13 +43,19 @@ class Champion:
         """
         intersect = np.intersect1d(self.stats.columns.tolist(), list(item.stats.keys()))
         for col in intersect:
-            self.stats[col] = [x+ item.stats[col] for x in self.stats[col]]
+            if type(item.stats[col]) == dict:
+                self.stats[col] = self.stats[col].apply(lambda x: {str(k): v + x for k, v in item.stats[col].items()})
+                
+            else:
+                self.stats[col] = [x+ item.stats[col] for x in self.stats[col]]
         newCols = [x for x in item.stats.keys() if x not in self.stats.columns.tolist()]
         for newCol in newCols :
             if type(item.stats[newCol]) == dict:
                 self.stats[newCol] = [item.stats[newCol]] * self.stats.shape[0]
+                
             else:
                 self.stats[newCol] = item.stats[newCol]
+            
         extract_values(self.stats)
     
     

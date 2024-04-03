@@ -34,6 +34,9 @@ import items.kraken_slayer as kraken_slayer
 import items.Titanic_hydra as titanic_hydra
 import items.black_cleaver as black_cleaver
 import items.sundered_sky as sundered_sky
+import items.triforce as triforce
+import items.terminus as terminus
+
 import champions.viego.scrapingViego as viego
 import class_array
 #import items.class_item
@@ -44,6 +47,8 @@ testKraken = kraken_slayer.createKraken()
 testTitanic = titanic_hydra.createTitanic()
 testBC = black_cleaver.createBC()
 testSunderedSky = sundered_sky.createSunderedSky()
+testTriforce = triforce.createTriforce()
+testTerminus = terminus.createTerminus()
 
 # %%
 print(testBrk)
@@ -64,6 +69,13 @@ viegoBC.addItem(testBC)
 viegoSundered = viego.createViego()
 viegoSundered.addItem(testSunderedSky)
 
+viegoTriforce = viego.createViego()
+viegoTriforce.addItem(testTriforce)
+
+viegoTerminus = viego.createViego()
+viegoTerminus.addItem(testTerminus)
+
+
 
 # %% [markdown]
 # ## Test fonctionalities of class_array
@@ -77,6 +89,8 @@ testArray.append(viegoBRK.stats.columns, viegoBRK.choseLvl(6))
 testArray.append(viegoKraken.stats.columns, viegoKraken.choseLvl(6))
 testArray.append(viegoBC.stats.columns, viegoBC.choseLvl(6))
 testArray.append(viegoSundered.stats.columns, viegoSundered.choseLvl(6))
+testArray.append(viegoTriforce.stats.columns, viegoTriforce.choseLvl(6))
+testArray.append(viegoTerminus.stats.columns, viegoTerminus.choseLvl(6))
 
 # %%
 testArray.array

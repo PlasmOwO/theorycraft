@@ -38,24 +38,23 @@ for idx,stats in enumerate(triforce_stat):
 triforce_stat = list(map(int,triforce_stat))
 
 triforce_stat[2] /=100
-print(triforce_stat)
 # -
 
 # ## Passive dmg increase
 
 one_stack = html.find("span", {"style" : "color:orange; white-space:normal"})
 one_stack = float(re.search(r'(\d+)', one_stack.text).group(1)) / 100
-print(one_stack)
+
 
 all_stacks = html.findAll("span", {"style" : "color:orange; white-space:normal"})[1]
 all_stacks = float(re.search(r'(\d+)', all_stacks.text).group(1)) / 100
-print(all_stacks)
+
 
 # ## Spellblade
 
 spellblade = html.findAll("span", {"style" : "color:orange; white-space:normal"})[2]
 spellblade = float(re.search(r'(\d+)', spellblade.text).group(1)) /100
-print(spellblade)
+#bug missing
 
 # ## Item Creation
 
@@ -71,9 +70,11 @@ import copy
 
 # +
 triforce_dict = {"ad" : triforce_stat[0], "haste" : triforce_stat[1],"as" : triforce_stat[2], "hp" : triforce_stat[3]}
-triforce_dict['passive_onestack'] = one_stack
-triforce_dict['passive_allstacks'] = all_stacks
-triforce_dict['spellblade'] = spellblade
+triforce_dict['spellblade'] = one_stack
 
 Triforce = Item('triforce', triforce_dict)
-print(Triforce)
+
+# -
+
+def createTriforce():
+    return Item("triforce", triforce_dict)

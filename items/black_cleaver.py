@@ -64,7 +64,7 @@ else :
     from class_item import Item
 import copy
 
-bc_dict = {"ad" : bc_stats[0], "haste" : bc_stats[1], "hp" : bc_stats[2],"passive_one_stack" : bc_passiv_one_stack, "passive_armor_shred" : bc_passiv}
+bc_dict = {"ad" : bc_stats[0], "haste" : bc_stats[1], "hp" : bc_stats[2],"BC_one_stack" : bc_passiv_one_stack, "BC_armor_shred" : bc_passiv}
 Black_cleaver = Item("black_cleaver", bc_dict)
 
 

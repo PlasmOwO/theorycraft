@@ -44,7 +44,7 @@ else :
 import copy
 
 sundered_dict = {"ad" : sundered[0], "haste" : sundered[1], "hp" : sundered[2]}
-sundered_dict['pass_auto'] = empowered_auto
+sundered_dict['sundered_auto'] = empowered_auto
 
 
 Sundered_sky = Item("sundered_sky",sundered_dict)

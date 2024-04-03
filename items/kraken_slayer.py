@@ -77,6 +77,7 @@ kraken_dict['three_autos'] = bring_passive
 
 
 Kraken = Item("kraken", kraken_dict)
+print(Kraken)
 
 
 def createKraken():

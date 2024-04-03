@@ -78,6 +78,10 @@ class Array:
           #Ajouter des colonnes
         #Automatiser le calcul de ses colonnes en fonction des valeurs brutes
 
+        
+        #Gérer le ON HIT, prendre la colonne on hit, lui ajouter les calculs du on hit de la BRK + QBRK + KRAKEN ?
+        #reduire ensuite tous les dmg, (QAUTO, WAUTO, RTOTAL, Gérer par rapport aux resistances adverses
+
 
 
 # +

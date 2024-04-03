@@ -123,10 +123,10 @@ import copy
 
 
 brk_dict = {"ad" : brk_stat[0], "as" : brk_stat[1], "lifesteal" : brk_stat[2]}
-brk_dict['passive'] = brk_passive
+brk_dict['brk_passive'] = brk_passive
 #brk_dict['three_autos'] = three_autos_dict
 brk_dict_range = copy.deepcopy(brk_dict)
-brk_dict_range['passive'] = brk_passive_range
+brk_dict_range['brk_passive'] = brk_passive_range
 
 
 # %%
