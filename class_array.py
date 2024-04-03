@@ -67,6 +67,9 @@ class Array:
         autoCalculColX(self.array,'qDoubletap')
         autoCalculColX(self.array,'wDmg')
         autoCalculColX(self.array,'viegoPassiveRegen')
+        autoCalculColX(self.array, 'titanic_passive_cleave')
+        autoCalculColX(self.array, 'titanic_active_cleave')
+
         #autoCalculColX(self.array,'titanic_passive')
         #autoCalculColX(self.array,'titanic_active')
 

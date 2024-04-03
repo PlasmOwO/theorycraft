@@ -96,12 +96,18 @@ testArray.append(viegoTriforce.stats.columns, viegoTriforce.choseLvl(6))
 testArray.append(viegoTerminus.stats.columns, viegoTerminus.choseLvl(6))
 testArray.append(viegoTitanic.stats.columns, viegoTitanic.choseLvl(6))
 
+testArray.array['titanic_active_cleave'].replace(0,'0',inplace=True)
+testArray.array['titanic_passive_cleave'].replace(0,'0',inplace=True)
+
 # %%
 testArray.array
 
 
 # %%
-print(testArray.array['qDoubletap'][2])
+print(testArray.array['qDoubletap'])
+
+# %%
+testArray.array['titanic_active_cleave']
 
 # %%
 testArray.array.columns
@@ -114,7 +120,7 @@ print(testArray.array['rMissingHealthDmg'])
 testArray.array
 
 # %%
-testArray.array.iloc[1]
+testArray.array.iloc[6]
 
 # %%
 #rMissing health dmg = Depend des pv adverses
