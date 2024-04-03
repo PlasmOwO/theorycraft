@@ -45,6 +45,7 @@ import class_array
 testBrk = brk.createBRK()
 testKraken = kraken_slayer.createKraken()
 testTitanic = titanic_hydra.createTitanic()
+print(testTitanic)
 testBC = black_cleaver.createBC()
 testSunderedSky = sundered_sky.createSunderedSky()
 testTriforce = triforce.createTriforce()
@@ -57,12 +58,14 @@ print(testBrk)
 #Create a champion object containing a .stats attribute which is a dataframe
 viegoBRK = viego.createViego()
 viegoBRK.addItem(testBrk)
+
 viegoKraken = viego.createViego()
 viegoKraken.addItem(testKraken)
-print(len(viegoKraken.stats))
+
 viegoTitanic = viego.createViego()
-#viegoTitanic.addItem(viegoTitanic)
-#viegoTitanic.stats
+viegoTitanic.addItem(testTitanic)
+print(viegoTitanic)
+
 #Not working
 viegoBC = viego.createViego()
 viegoBC.addItem(testBC)
@@ -91,6 +94,7 @@ testArray.append(viegoBC.stats.columns, viegoBC.choseLvl(6))
 testArray.append(viegoSundered.stats.columns, viegoSundered.choseLvl(6))
 testArray.append(viegoTriforce.stats.columns, viegoTriforce.choseLvl(6))
 testArray.append(viegoTerminus.stats.columns, viegoTerminus.choseLvl(6))
+testArray.append(viegoTitanic.stats.columns, viegoTitanic.choseLvl(6))
 
 # %%
 testArray.array

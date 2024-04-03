@@ -48,7 +48,10 @@ sundered_dict['sundered_auto'] = empowered_auto
 
 
 Sundered_sky = Item("sundered_sky",sundered_dict)
+print(Sundered_sky)
 
 
 def createSunderedSky():
     return Item("sundered_sky", sundered_dict)
+
+
