@@ -56,6 +56,12 @@ class Array:
         ## Il faut prévoir une sorte de fonction qui ajoute des colonnes vides (0) dans le cas ou une des données n'est pas renseignée
         ## (exemple : si on a pas de degats on-hit, il faudra tout de meme une colonne dédié à cela)
         ## gérer aussi le cas de la brillance
+
+    def addEnnemyPlayer(self, hp, resi) :
+        self.array['ennemy_hp'] = hp
+        self.array['ennemy_armor'] = resi
+        self.array['ennemy_mr'] = resi
+        
     def autoCalcul(self):
         self.array.fillna(0, inplace=True)
 
@@ -73,16 +79,22 @@ class Array:
         #autoCalculColX(self.array,'titanic_passive')
         #autoCalculColX(self.array,'titanic_active')
 
+        #On hit calculation :
+        #Prendre la colonne de base, lui ajouter les DMG de BRK + passive + titanic_passive + kraken + terminus
+
 
         # 0.625 × (1 + 97.35 ÷ 100)
         self.array['qAutoDmg'] = self.array['qActive'] + self.array['ad'] + self.array['qDoubletap']
         self.array['wAutoDmg'] = self.array['wDmg'] + self.array['ad'] + self.array['qDoubletap']
         self.array['rTotalDmg'] = self.array['rAutoDmg'] + self.array['rMissingHealthDmg']
+        self.array['qBRK'] = self.array['qBRK'] * (0.5 * self.array['ennemy_hp'])
+        self.array['brk_passive'] = self.array['brk_passive'] * (0.5 * self.array['ennemy_hp'])
+        self.array['on-hit'] += self.array['qBRK'] + self.array['brk_passive'] + self.array['titanic_passive_cleave'] + self.array['three_autos']
           #Ajouter des colonnes
         #Automatiser le calcul de ses colonnes en fonction des valeurs brutes
 
         
-        #Gérer le ON HIT, prendre la colonne on hit, lui ajouter les calculs du on hit de la BRK + QBRK + KRAKEN ?
+        #Gérer le ON HIT, prendre la colonne on hit, lui ajouter les calculs du on hit de la BRK + QBRK + KRAKEN ? + titanic 
         #reduire ensuite tous les dmg, (QAUTO, WAUTO, RTOTAL, Gérer par rapport aux resistances adverses
 
 

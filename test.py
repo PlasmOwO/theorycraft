@@ -99,6 +99,8 @@ testArray.append(viegoTitanic.stats.columns, viegoTitanic.choseLvl(6))
 testArray.array['titanic_active_cleave'].replace(0,'0',inplace=True)
 testArray.array['titanic_passive_cleave'].replace(0,'0',inplace=True)
 
+testArray.addEnnemyPlayer(1500,80)
+
 # %%
 testArray.array
 

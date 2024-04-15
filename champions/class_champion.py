@@ -73,7 +73,13 @@ class Champion:
         return self.stats.iloc[lvl-1]
         #doit return une list (comme pour le excel)
         #Ensuite on ajoutera cette list au dataframe sur 1 champion
-    
+
+    def setEnnemyResi(self, hp, resi):
+        """
+            Create a columns for HP ennemy and resistance to know if a build is good against tank    
+        """
+        self.stats['ennemyHP'] = hp
+        self.stats['ennemyResi'] = resi
 
 
 # %%
