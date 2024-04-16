@@ -75,13 +75,15 @@ class Array:
         autoCalculColX(self.array,'viegoPassiveRegen')
         autoCalculColX(self.array, 'titanic_passive_cleave')
         autoCalculColX(self.array, 'titanic_active_cleave')
+        
 
         #autoCalculColX(self.array,'titanic_passive')
         #autoCalculColX(self.array,'titanic_active')
 
         #On hit calculation :
         #Prendre la colonne de base, lui ajouter les DMG de BRK + passive + titanic_passive + kraken + terminus
-
+        self.array['wCD'] = self.array['wCD'].astype('int32')
+        self.array['rCD'] = self.array['rCD'].astype('int32')
 
         # 0.625 × (1 + 97.35 ÷ 100)
         self.array['qAutoDmg'] = self.array['qActive'] + self.array['ad'] + self.array['qDoubletap']
@@ -93,11 +95,18 @@ class Array:
           #Ajouter des colonnes
         #Automatiser le calcul de ses colonnes en fonction des valeurs brutes
 
+        #gestion de la CDR (haste)
+        self.array['qCD'] *= 100/(100+self.array['haste'])
+        self.array['wCD'] *= 100/(100+self.array['haste'])
+        self.array['rCD'] *= 100/(100+self.array['haste'])
+        
+        
+
+        self.array['burstDmg'] = self.array['qAutoDmg'] + self.array['wAutoDmg'] + self.array['rTotalDmg'] + (self.array['base_ad']*self.array['spellblade']) + self.array['titanic_active_cleave']+self.array['on-hit'] * 5
+        self.array['DPS'] = (self.array['as_per_second'] * (self.array['ad'] +self.array['on-hit']) ) + (self.array['qAutoDmg'] * (1/self.array['qCD']) + (self.array['base_ad']*self.array['spellblade'])) + (self.array['wAutoDmg'] * (1/ self.array['wCD'])) + (self.array['rTotalDmg'] * (1/self.array['rCD']))  + (self.array['titanic_active_cleave'] * (1/12))
         
         #Gérer le ON HIT, prendre la colonne on hit, lui ajouter les calculs du on hit de la BRK + QBRK + KRAKEN ? + titanic 
         #reduire ensuite tous les dmg, (QAUTO, WAUTO, RTOTAL, Gérer par rapport aux resistances adverses
-
-
 
 # +
 # e-z auto q-auto R
@@ -106,5 +115,4 @@ class Array:
 # dmg du R / cd
 # nombre d'attaque par seconde
 # -
-
 

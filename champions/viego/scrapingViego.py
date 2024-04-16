@@ -414,6 +414,8 @@ def createViego():
     return Champion("viego", stats)
 
 
+createViego().stats['viegoPassiveRegen'][1]
+
 createViego().stats
 
 

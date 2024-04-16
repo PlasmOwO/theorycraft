@@ -26,10 +26,11 @@
 
 import pandas as pd
 import numpy as np
-
+import matplotlib.pyplot as plt
 from class_item import Item
 from champions.class_champion import Champion
 import items.BRK as brk
+import seaborn as sns
 import items.kraken_slayer as kraken_slayer
 import items.Titanic_hydra as titanic_hydra
 import items.black_cleaver as black_cleaver
@@ -122,7 +123,85 @@ print(testArray.array['rMissingHealthDmg'])
 testArray.array
 
 # %%
+print(testArray.array['wCD'][0])
+print(testArray.array['rCD'])
+
+# %%
 testArray.array.iloc[6]
+
+# %%
+finalArray = testArray.array[['hp','armor','magic_res','viegoPassiveRegen','lifesteal','burstDmg','DPS']]
+
+# %%
+finalArray
+
+# %%
+finalArrayNormalize = (finalArray - finalArray.min()) / (finalArray.max() - finalArray.min())
+
+# %%
+finalArrayNormalize
+
+# %% [markdown]
+# * BRK
+# * Kraken
+# * BC
+# * Sundered
+# * triforce
+# * terminus
+# * titanic
+
+# %%
+palette = sns.color_palette("husl", len(finalArrayNormalize))
+num_vars = len(finalArrayNormalize.columns)
+
+# Création d'un angle pour chaque variable
+angles = [n / float(num_vars) * 2 * 3.14159 for n in range(num_vars)]
+angles += angles[:1]
+
+fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
+
+# Tracer un graphique radar pour chaque ligne de données
+for i in range(len(finalArrayNormalize)):
+    values = finalArrayNormalize.iloc[i].values.flatten().tolist()
+    values += values[:1]
+    ax.plot(angles, values, linewidth=1, linestyle='solid', label=f'Item {i}', color=palette[i])
+
+# Ajouter des étiquettes pour chaque variable
+ax.set_xticks(angles[:-1])
+ax.set_xticklabels(finalArrayNormalize.columns)
+
+plt.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1))
+
+plt.show()
+
+# %%
+palette = sns.color_palette("husl", len(finalArrayNormalize))
+num_vars = len(finalArrayNormalize.columns)
+
+# Création d'un angle pour chaque variable
+angles = [n / float(num_vars) * 2 * 3.14159 for n in range(num_vars)]
+angles += angles[:1]
+
+# Création des sous-graphiques pour chaque ligne
+for i in range(len(finalArrayNormalize)):
+    fig, ax = plt.subplots(figsize=(5, 5), subplot_kw=dict(polar=True))
+    
+    values = finalArrayNormalize.iloc[i].values.flatten().tolist()
+    values += values[:1]
+    ax.plot(angles, values, linewidth=1, linestyle='solid', label=f'Item {i}',color=palette[i])
+    
+    # Ajouter des étiquettes pour chaque variable
+    ax.set_xticks(angles[:-1])
+    ax.set_xticklabels(finalArrayNormalize.columns)
+    
+    # Ajouter une légende
+    ax.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1))
+    
+    # Titre du graphique
+    ax.set_title(f'Radar Plot - Item {i}')
+    
+    # Afficher le graphique
+    plt.show()
 
 # %%
 #rMissing health dmg = Depend des pv adverses
