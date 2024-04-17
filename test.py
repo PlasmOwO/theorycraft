@@ -23,7 +23,8 @@
 # utiliser sys.path
 
 # Script : Faire une fonction qui **return** un objet Item
-
+import warnings
+warnings.simplefilter("ignore")
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -46,7 +47,6 @@ import class_array
 testBrk = brk.createBRK()
 testKraken = kraken_slayer.createKraken()
 testTitanic = titanic_hydra.createTitanic()
-print(testTitanic)
 testBC = black_cleaver.createBC()
 testSunderedSky = sundered_sky.createSunderedSky()
 testTriforce = triforce.createTriforce()
@@ -65,7 +65,6 @@ viegoKraken.addItem(testKraken)
 
 viegoTitanic = viego.createViego()
 viegoTitanic.addItem(testTitanic)
-print(viegoTitanic)
 
 #Not working
 viegoBC = viego.createViego()
@@ -214,8 +213,6 @@ for i in range(len(finalArrayNormalize)):
 #Si deja je fais tous les objets on va etre vite régler je pense
 
 # %% [markdown]
-# * rMising health * PV
-# * qbrk * 50% PV
-# * passive * 50% PV
+# ViegoPass ??
 
 # %%
